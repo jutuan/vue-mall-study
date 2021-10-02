@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
+    <tab-bar>
+      <tab-bar-item path="/home" activeStyle="deeppink">
+        <img slot="img-item" src="./assets/img/tabbar/home.svg" alt />
+        <img slot="img-item-active" src="./assets/img/tabbar/home_active.svg" alt />
+        <div slot="text-item">首页</div>
+      </tab-bar-item>
+      <tab-bar-item path="/category" activeStyle="deeppink">
+        <img slot="img-item" src="~assets/img/tabbar/category.svg" alt />
+        <img slot="img-item-active" src="./assets/img/tabbar/category_active.svg" alt />
+        <div slot="text-item">分类</div>
+      </tab-bar-item>
+      <tab-bar-item path="/shopcart" activeStyle="deeppink">
+        <img slot="img-item" src="./assets/img/tabbar/shopcart.svg" alt />
+        <img slot="img-item-active" src="./assets/img/tabbar/shopcart_active.svg" alt />
+        <div slot="text-item">购物车</div>
+      </tab-bar-item>
+      <tab-bar-item path="/profile" activeStyle="deeppink">
+        <img slot="img-item" src="./assets/img/tabbar/profile.svg" alt />
+        <img slot="img-item-active" src="./assets/img/tabbar/profile_active.svg" alt />
+
+        <div slot="text-item">我的</div>
+      </tab-bar-item>
+    </tab-bar>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TabBar from "./components/common/tabbar/tabbar.vue";
+import TabBarItem from "./components/common/tabbar/tabbarItem.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
+    TabBar,
+    TabBarItem
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import "./assets/css/base.css";
 </style>
