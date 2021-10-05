@@ -6,13 +6,13 @@ export function request(config) {
         timeout: 20000
     })
     instant.interceptors.request.use(res => {
-        console.log("interceptors.request",res)
+        // console.log("interceptors.request",res)
         return res
     }, err => {
         console.log(err)
     })
     instant.interceptors.response.use(res => {
-        console.log("interceptors.response",res)
+        // console.log("interceptors.response",res)
         return res.data
     }, err => {
         console.log(err)

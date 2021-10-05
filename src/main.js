@@ -3,8 +3,11 @@ import App from './App.vue'
 import router from './router/index'
 import axios from 'axios'
 import { request } from './network/request'
-request
+
+
+
 Vue.config.productionTip = false
+Vue.prototype.$bus = new Vue()
 /* eslint-disable no-new */
 new Vue({
   render: h => h(App),
@@ -34,12 +37,12 @@ axios.defaults.timeout = 5000
 //     console.log(res1);
 //   })
 
-axios.all([axios({ url: "home/multidata", }),
-axios({ url: "http://123.207.32.32:8000/home/multidata", })])
-  .then(axios.spread((res1, res2) => {
-    console.log(res1);
-    console.log(res2)
-  }))
+// axios.all([axios({ url: "home/multidata", }),
+// axios({ url: "http://123.207.32.32:8000/home/multidata", })])
+//   .then(axios.spread((res1, res2) => {
+//     console.log(res1);
+//     console.log(res2)
+//   }))
 
 
 

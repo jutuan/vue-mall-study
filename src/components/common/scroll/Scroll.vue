@@ -14,15 +14,14 @@ BScroll.use(ObserveDOM);
 BScroll.use(PullUp);
 export default {
   name: "",
-  props:{
-    probeType:{
-      type:Number,
-      default:0
+  props: {
+    probeType: {
+      type: Number,
+      default: 0
     },
-    pullUpLoad:{
-      type:Boolean,
-      default:false
-
+    pullUpLoad: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -30,9 +29,20 @@ export default {
   },
   methods: {
     scrollTo(x, y, time = 300) {
-      this.scroll.scrollTo(x, y, time);
+      this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time);
+      // this.scroll.scrollTo(x, y, time);
     },
-    finishPullUp(){this.scroll.finishPullUp()}
+    finishPullUp() {
+      this.scroll.finishPullUp();
+    },
+    refresh() {
+      console.log("-------------");
+      this.scroll  && this.scroll.refresh();
+      // this.scroll.refresh();
+    },
+    getScrollY(){
+      return this.scroll ? this.scroll.y : 0
+    }
   },
   mounted() {
     this.scroll = new BScroll(this.$refs.warpper, {
@@ -43,11 +53,12 @@ export default {
     });
     this.scroll.on("scroll", postion => {
       // console.log(postion);
-      this.$emit('scroll',postion)
+      this.$emit("scroll", postion);
     });
+    console.log("this.scroll", this.scroll);
     this.scroll.on("pullingUp", () => {
       console.log("上拉加载更多");
-      this.$emit('pullingUp')
+      this.$emit("pullingUp");
       // setTimeout(() => {
       //   this.scroll.finishPullUp();
       // }, 2000);

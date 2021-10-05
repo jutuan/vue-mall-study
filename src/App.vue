@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-    
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+
     <tab-bar>
       <tab-bar-item path="/home" activeStyle="deeppink">
         <img slot="img-item" src="./assets/img/tabbar/home.svg" alt />
@@ -35,7 +37,7 @@ export default {
   name: "app",
   components: {
     TabBar,
-    TabBarItem,
+    TabBarItem
   }
 };
 </script>

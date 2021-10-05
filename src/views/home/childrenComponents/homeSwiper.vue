@@ -1,9 +1,9 @@
 <template>
   <div>
     <Swiper>
-      <SwiperItem v-for="item in banner" :key="item.link">
+      <SwiperItem v-for="item in banner" :key="item.link" >
         <a :href="item.link">
-          <img :src="item.image" alt />
+          <img :src="item.image" alt @load="loadimg" />
         </a>
       </SwiperItem>
     </Swiper>
@@ -19,20 +19,27 @@ export default {
     Swiper,
     SwiperItem
   },
-  props:{
-      banner:{
-          type:Array,
-          default(){
-              return []
-          }
+  props: {
+    banner: {
+      type: Array,
+      default() {
+        return [];
       }
+    }
   },
   data() {
     return {
-      msg: ""
+      msg: true
     };
   },
-  methods: {},
+  methods: {
+    loadimg() {
+      if (this.msg) {
+        this.$emit("SwiperLoadimg");
+        this.msg = false;
+      }
+    }
+  },
   mounted() {}
 };
 </script>

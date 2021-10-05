@@ -1,6 +1,8 @@
 <template>
   <div class="tabbarContrl">
-    <div v-for="(item,index) in titlelist" :key="index" class="tabbarContrl-item" @click="CurIndex(index)" :class="{ active: index === currentIndex}">
+    <div v-for="(item,index) in titlelist" 
+    :key="index" class="tabbarContrl-item" @click="CurIndex(index)" 
+    :class="{ active: index === currentIndex}">
       <span>{{item}}</span>
     </div>
    
@@ -41,6 +43,7 @@ export default {
   line-height: 44px;
   text-align: center;
   font-size: 15px;
+  background-color: white;
 }
 .tabbarContrl-item {
   flex: 1;

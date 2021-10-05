@@ -3,11 +3,25 @@
     <navbar class="home-nav">
       <div slot="center">购物街</div>
     </navbar>
-    <Scroll class="content" ref="scrollData" :probeType="3" @scroll="contentScroll" @pullingUp="loadmore" :pullUpLoad="true">
-      <HomeSwiper :banner="banner"></HomeSwiper>
+    <TabbarContrl
+      ref="tabarContrl2"
+      class="tabbaritem"
+      :titlelist="['流行','新款','精选']"
+      @tabclick="tabclick"
+      v-show="isshowtabbar"
+    ></TabbarContrl>
+    <Scroll
+      class="content"
+      ref="scrollData"
+      :probeType="3"
+      @scroll="contentScroll"
+      @pullingUp="loadmore"
+      :pullUpLoad="true"
+    >
+      <HomeSwiper :banner="banner" @SwiperLoadimg="SwiperLoadimg"></HomeSwiper>
       <HomeRecommand :recommand="recommand"></HomeRecommand>
       <HomeFeatrue></HomeFeatrue>
-      <TabbarContrl class="tabbaritem" :titlelist="['流行','新款','精选']" @tabclick="tabclick"></TabbarContrl>
+      <TabbarContrl ref="tabarContrl1" :titlelist="['流行','新款','精选']" @tabclick="tabclick"></TabbarContrl>
       <Goodlist :goodlist="showGoods"></Goodlist>
     </Scroll>
 
@@ -28,7 +42,7 @@ import Scroll from "../../components/common/scroll/Scroll.vue";
 import BackTop from "../../components/content/BackTop/Backtop.vue";
 
 import { getHomeMultidata, getGoodData } from "../../network/home";
-
+import { debance } from "../../commonjs/util";
 export default {
   name: "home",
   components: {
@@ -57,29 +71,39 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] }
       },
-      curentType: "pop"
+      curentType: "pop",
+      tabOffsetTop: 0,
+      isshowtabbar: false
     };
   },
   created() {
+    //请求home的banner和轮播图数据
     this.getHomeMultidata();
+    //请求商品数据
     this.getGoodData("pop");
     this.getGoodData("new");
     this.getGoodData("sell");
   },
   methods: {
-    
-    loadmore(){
-      console.log("------"),
+    //监听获取tabOffsetTop
+    SwiperLoadimg() {
+      this.tabOffsetTop = this.$refs.tabarContrl1.$el.offsetTop;
+      console.log("this.tabOffsetTop-------", this.tabOffsetTop);
+    },
+    //下拉加载下一页数据,首页
+    loadmore() {
+      // console.log("------"),
       this.getGoodData(this.curentType);
-
     },
 
     contentScroll(postion) {
-      // console.log(postion.y);
+      // 判断向上图标是否显示   console.log(postion.y);
       this.isShow = postion.y < -1000;
+      // 判断tabContrl是否吸顶
+      this.isshowtabbar = postion.y < -this.tabOffsetTop;
     },
     backTop() {
-      console.log(["流行", "新款", "精选"], this.$refs.scrollData);
+      // console.log(["流行", "新款", "精选"], this.$refs.scrollData);
       this.$refs.scrollData.scrollTo(0, 0, 1000);
     },
     //小的['流行','新款','精选']列表数据选择
@@ -95,6 +119,7 @@ export default {
           this.curentType = "sell";
           break;
       }
+      this.$refs.tabarContrl2.currentIndex = index;
     },
     //网络请求
     getHomeMultidata() {
@@ -114,11 +139,30 @@ export default {
         // console.log("pop" + type, res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
-        this.$refs.scrollData.finishPullUp()
+        this.$refs.scrollData.finishPullUp();
       });
     }
   },
-  mounted() {}
+  mounted() {
+    //1、防抖动
+    const refresh = debance(this.$refs.scrollData.refresh(), 500);
+    //2、监听goodlist-item.vue 发送的图片价值完成
+    this.$bus.$on("itemloadimg", () => {
+      refresh();
+    });
+  },
+  destroyed() {
+    console.log("homedestroy");
+  },
+  activated() {
+    console.log("activated");
+    this.$refs.scrollData.scrollTo(0, this.saveY, 0);
+    this.$refs.scrollData.refresh();
+  },
+  deactivated() {
+    this.saveY = this.$refs.scrollData.getScrollY() 
+    console.log("deactivated this.saveY",this.saveY);
+  }
 };
 </script>
 <style scoped>
@@ -129,11 +173,15 @@ export default {
 }
 .home-nav {
   background-color: var(--color-tint);
-  position: fixed;
+  /* position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  z-index: 9;
+  z-index: 9; */
+}
+.tabbaritem1 {
+  position: relative;
+  /* z-index: 9; */
 }
 .tabbaritem {
   position: sticky;

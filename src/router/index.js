@@ -4,6 +4,7 @@ import Home from "../views/home/home.vue"
 import Category from "../views/category/cattegory.vue"
 import Shopcart from "../views/shopcart/shopcart.vue"
 import Profile from "../views/profile/profile.vue"
+import Detail from "../views/detail/detail.vue"
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,10 @@ const router = new VueRouter({
         {
             path: "/Profile",
             component: Profile
+        },
+        {
+            path: "/detail/:iid",
+            component: Detail
         }
     ],
     mode:'history'
