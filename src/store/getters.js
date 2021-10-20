@@ -1,0 +1,17 @@
+export default {
+    cartLength(state) {
+        return state.cartList.length
+    },
+    cartList(state) {
+        return state.cartList
+    },
+    PriceCount(state) {
+        var cot = 0;
+        for (var item of state.cartList) {
+            if (item.checked) {
+                cot = item.count * item.price + cot
+            }
+        }
+        return cot;
+    }
+}

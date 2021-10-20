@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="goToDetail()">
-    <img :src="goodlistItem.show.img" @load="loadimg" alt />
+    <img :src="isImage" @load="loadimg" alt />
     <!-- {{goodlistItem}} -->
     <div class="goods-info">
       <p>{{goodlistItem.title}}</p>
@@ -21,20 +21,27 @@ export default {
       }
     }
   },
+  computed: {
+    isImage() {
+      return this.goodlistItem.image || this.goodlistItem.show.img;
+    }
+  },
   data() {
     return {
-      iid:null
+      iid: null
     };
   },
   methods: {
     //跳转到详情页
-    goToDetail(){
-      console.log('this.goodlistItem.iid',this.goodlistItem.iid)
-      this.$router.push('/detail/'+this.goodlistItem.iid)
+    goToDetail() {
+      console.log("this.goodlistItem.iid", this.goodlistItem.iid);
+      this.$router.push("/detail/" + this.goodlistItem.iid);
     },
     loadimg() {
       // console.log('imageload')
-      this.$bus.$emit('itemloadimg')
+      if (this.$route.path.indexOf("/home")) {
+        this.$bus.$emit("itemloadimg");
+      }
     },
     condata() {
       // console.log("goodlistItem", this.goodlistItem);

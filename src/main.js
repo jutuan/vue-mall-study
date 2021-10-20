@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router/index'
 import axios from 'axios'
 import { request } from './network/request'
-
+import store from './store/index'
 
 
 Vue.config.productionTip = false
@@ -11,7 +11,8 @@ Vue.prototype.$bus = new Vue()
 /* eslint-disable no-new */
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')
 // axios({
 //   url: "http://123.207.32.32:8000/home/multidata",
