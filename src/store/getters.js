@@ -13,5 +13,14 @@ export default {
             }
         }
         return cot;
+    },
+    productCount(state) {
+        var count = 0;
+        for (var item of state.cartList) {
+            if (item.checked) {
+                count = item.count  + count
+            }
+        }
+        return count;
     }
 }

@@ -39,6 +39,9 @@ import {
 } from "../../network/detail";
 import Goodlist from "../../components/content/goodlist/goodlist.vue";
 import { debance } from "../../commonjs/util";
+
+import { mapActions } from "vuex"
+
 export default {
   name: "DETA",
   components: {
@@ -120,6 +123,8 @@ export default {
   },
   mounted() {},
   methods: {
+    //
+    ...mapActions(['addcart']),
     //加入购物车
     addToCart() {
       console.log("------");
@@ -134,7 +139,11 @@ export default {
 
       //将商品添加到购物车里面
       //  this.$store.commit('addcart',product)
-      this.$store.dispatch("addcart", product);
+      // this.$store.dispatch("addcart", product).then(res=>{console.log(res)});
+      this.addcart(product).then((res)=>{
+        this.$toast.show(res,1000)
+        console.log(this.$toast)});
+
     },
 
     ScrollPostion(postion) {

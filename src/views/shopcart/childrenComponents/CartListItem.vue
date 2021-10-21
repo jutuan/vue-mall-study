@@ -56,8 +56,9 @@ export default {
     padding: 5px;
     border-bottom: 1px solid #ccc;
 }
-item-selector{
-    width: 10px;
+.item-selector{
+    width: 12px;
+    margin-left: 6px;
     display: flex;
     justify-content: center;
     align-items: center;

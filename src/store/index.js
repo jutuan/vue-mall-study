@@ -8,6 +8,9 @@ Vue.use(Vuex)
 //创建store对象
 const state= {
     cartList: [],
+    PriceCount:0,
+    productCount:0
+
 }
 const store = new Vuex.Store({
     state,

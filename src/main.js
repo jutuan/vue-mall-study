@@ -5,9 +5,13 @@ import axios from 'axios'
 import { request } from './network/request'
 import store from './store/index'
 
+import toast from './components/common/toast/index'
 
 Vue.config.productionTip = false
 Vue.prototype.$bus = new Vue()
+
+//安装toast插件
+Vue.use(toast)
 /* eslint-disable no-new */
 new Vue({
   render: h => h(App),
