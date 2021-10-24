@@ -6,7 +6,8 @@ import { request } from './network/request'
 import store from './store/index'
 
 import toast from './components/common/toast/index'
-
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload)
 Vue.config.productionTip = false
 Vue.prototype.$bus = new Vue()
 
